@@ -1,0 +1,39 @@
+Program
+    = Declarations ProcedureCall .
+
+Declarations
+    = Declaration Declarations
+    | E
+
+Declaration
+    = "declare" Identifier Callable
+
+Callable
+    = Identifier
+    | ProcedureDefinition
+    | ParametricDefinition
+
+ParametricDefinition
+    = "->" FormalParameters ProcedureDefinition
+
+ProcedureDefinition
+    = ";" ProcedureCall
+
+ProcedureCall
+    = Callable ActualParameters
+
+ActualParameters
+    = Expression ActualParameters
+    | E
+
+
+Expression
+    = Identifier
+    | Literal
+    | Callable
+
+Literal
+    = StringLiteral
+    | NumberLiteral
+    | ProcedureDefinition
+    | ParametricDefinition

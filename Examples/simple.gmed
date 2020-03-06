@@ -1,0 +1,4 @@
+proc1 a b -> c;
+write 4.0;
+write "Hello World\n";
+terminate.

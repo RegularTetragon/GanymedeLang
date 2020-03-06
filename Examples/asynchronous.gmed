@@ -1,0 +1,7 @@
+declare writeTwice -> str;
+    write str;
+    write str;
+    terminate.
+
+yeet -> a; {concat "hello" a writeTwice.}
+writeTwice "goodbye".

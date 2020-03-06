@@ -1,0 +1,8 @@
+(-> programName terminate openfile;
+    openfile "STDIN" -> read _ ;
+    openfile "STDOUT" -> _ write;
+    openfile "STDERR" -> _ writeError;
+    declare error -> errorString continue;
+        writeError errorString;
+        terminate.
+    import "programName".)

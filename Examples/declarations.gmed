@@ -1,0 +1,12 @@
+declare a -> b return;
+    call1 b;
+    call2 b;
+    return.
+
+declare b -> c return;
+    call3 -> out;
+    return out.
+
+a 1;
+b 2 -> result;
+terminate.
