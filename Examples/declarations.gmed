@@ -1,12 +1,13 @@
-declare a -> b return;
+let => b;
     call1 b;
-    call2 b;
-    return.
+    call2 b -> x;
+    continue x.
+-> a;
 
-declare b -> c return;
-    call3 -> out;
-    return out.
+let =>;
+    call3 continue.
+-> b;
 
-a 1;
-b 2 -> result;
-terminate.
+a 1.0;
+b 2.5 -> result;
+continue result.

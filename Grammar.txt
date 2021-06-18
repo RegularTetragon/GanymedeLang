@@ -1,12 +1,5 @@
 Program
-    = Declarations ProcedureCall .
-
-Declarations
-    = Declaration Declarations
-    | E
-
-Declaration
-    = "declare" Identifier Callable
+    = ProcedureCall .
 
 Callable
     = Identifier
@@ -15,6 +8,7 @@ Callable
 
 ParametricDefinition
     = "->" FormalParameters ProcedureDefinition
+    = "=>" FormalParameters ProcedureDefinition .
 
 ProcedureDefinition
     = ";" ProcedureCall

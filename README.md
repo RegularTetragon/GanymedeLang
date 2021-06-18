@@ -4,7 +4,7 @@ Ganymede is based on the language Io found in Dr. Raphael Finkel's book Advanced
 
 
 ## Ganymede Programs
-All ganymede programs contain any number of declarations, followed by a procedure call, followed by a period. This single statement however can contain other statements. A statement is a procedure call, or a procedure definition.
+All ganymede programs contain a single statement. This single statement however can contain other statements. A statement is a procedure call, or a procedure definition.
 
 ## Expressions
 There are few things in ganymede that can be evaluated. Those things are
@@ -27,19 +27,6 @@ Types are first class
 * String - represented by "string"
 * Number - represented by "number"
 * Procedure - Procedure types are represented by parentheses with a space separated argument list
-
-## Built in procedures
-* import :: string (T...)                       opens a Ganymede module and runs it immediately
-* export :: (T...)                              returns content from a ganymede module.
-* read :: (string)                              reads from standard in
-* write :: string ()                            writes to standard out
-* async :: () ()                                runs two procedures simultaneously
-* open :: string ((string) (string ()))         opens a file and returns a read and write procedure for that file.
-* shared :: T ((T) (T ()))                      creates a shared memory location between threads, and passes getters and setters to its given continuation
-* channel :: T ((T) (T))                      creates a bounded buffer
-
-## Constructors do return
-There are 
 
 ## Semicolon operator: Building Procedures
 The semicolon operator constructs a argumentless, anonymous, deeply bound procedure from the ";" to the end of the current block.
@@ -74,7 +61,7 @@ For example:
 -> x y;
 write x;
 write y;
-terminate.
+terminate
 
 will get parsed as
 -> x y (; write x (; write y (; terminate)))
@@ -85,34 +72,49 @@ The arguments may be of any type, including other procedures:
 -> x y continue;
 write x;
 write y;
-continue.
+continue
 
 All parameters are passed by value.
 
-## Declarations
-A declaration is a constant in the program. These declarations can be of any type, and are written as
-declare \declarationName\ \declarationValue\
+### Syntactic Sugar
+Because a continue is so common, and when used tends to involve nesting, the => operator is provided. The => operator implicitly adds a "continue" parameter, and must be closed using a ".", these dots must line up.
 
-A common usage of declarations is to name procedures:
+```ganymede
+=> x y;
+    + x y -> z;
+    * x z -> w;
+    continue w.
+```
 
-declare writeTwice -> str continue;
-    write x;
-    write y;
-    continue.
+This is useful for functions like spawn, reducing the need for parentheses.
 
-## Blocks
-Blocks are defined with curly braces. They create a argumentless procedure which can end before the block's enclosing area.
-The "}" part of the block has an implicit semicolon after it.
+```ganymede
+spawn => thread;
+    get thread "name" -> name;
+    write name.
 
+otherStuffDownHere
+```
+## Default Environment
 
-{ is syntactic sugar for (;
-} is syntactic sugar for );
+### let :: T (T)
+calls a continuation immediately with the value passed in.
 
-Let's take async for example, which takes two procedures:
+### import :: string (T...)
+opens a Ganymede module and runs it immediately.
 
-spawn {
-    write "hi";
-    terminate.
-}
-write "bye";
-terminate.
+### continue :: (T...)
+returns control to the importing module. If this is the top level
+the program will exit.
+
+### read :: (string)
+reads a line from standard in, passes the result into the continuation
+
+### write :: string ()
+writes to standard out
+
+### spawn :: (thread) ()
+runs the given procedure in a new thread.
+
+### open :: string ((string) (string ()))
+opens a file and returns a read and write procedure for that file.

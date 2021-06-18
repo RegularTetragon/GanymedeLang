@@ -16,10 +16,13 @@ author:              Vincent Mattingly
 build-type:          Simple
 extra-source-files:  CHANGELOG.md
 
+
 executable Ganymede
   main-is:             Main.hs
-  -- other-modules:
+  other-modules:
+    Ganymede.Types
+    Ganymede.Parser
   -- other-extensions:
-  build-depends:       base >=4.13 && <4.14, parsec
+  build-depends:       base >=4.12, parsec
   -- hs-source-dirs:
   default-language:    Haskell2010

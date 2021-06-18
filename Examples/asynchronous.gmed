@@ -1,7 +1,8 @@
-declare writeTwice -> str;
-    write str;
-    write str;
-    terminate.
+let => x;
+    write x;
+    write x;
+    continue.
 
-yeet -> a; {concat "hello" a writeTwice.}
+yeet =>;
+    .
 writeTwice "goodbye".
