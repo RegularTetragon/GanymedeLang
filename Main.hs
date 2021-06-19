@@ -6,5 +6,5 @@ import Ganymede.Parser
 main :: IO ()
 main = do
     args <- getArgs
-    contents <- readFile $ fromMaybe "STDIN" (listToMaybe args)
+    contents <- readFile $ fromMaybe "/dev/stdin" (listToMaybe args)
     parseTest program contents
